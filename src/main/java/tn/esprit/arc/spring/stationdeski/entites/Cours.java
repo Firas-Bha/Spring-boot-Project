@@ -2,6 +2,7 @@ package tn.esprit.arc.spring.stationdeski.entites;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table( name = "Cours")
@@ -17,5 +18,9 @@ public class Cours implements Serializable {
     private Support support;
     private Float prix;
     private Integer creneau;
+
+    @OneToMany(mappedBy="cours")
+    private Set<Inscription> inscriptions;
+
 
 }
