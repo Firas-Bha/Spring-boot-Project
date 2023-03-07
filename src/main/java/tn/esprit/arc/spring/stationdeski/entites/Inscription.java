@@ -7,7 +7,9 @@ import java.io.Serializable;
 public class Inscription  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "numInscription")
+    @Column(name = "IdInscription")
+    private Integer IdInscription;
+
     private long numInscription;
     private int numSemaine;
 

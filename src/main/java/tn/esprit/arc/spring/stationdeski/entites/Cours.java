@@ -9,7 +9,8 @@ import java.util.Set;
 public class Cours implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "numCours")
+    @Column(name = "IdCours")
+    private Integer IdCours;
     private Long numCours;
     private Integer niveau;
     @Enumerated(EnumType.STRING)
