@@ -1,5 +1,7 @@
 package tn.esprit.arc.spring.stationdeski.Controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +13,13 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/skieur")
+@Tag(name="Skieur Management")
 public class SkieurRestController {
     ISkieurService skieurService;
 
     // http://localhost:8089/stationSki/skieur/retrieve-all-skieurs
+
+ @Operation(description = "Affichage des skieurs")
     @GetMapping("/retrieve-all-skieurs")
     public List<Skieur> getSkieurs() {
         List<Skieur> listSkieurs = skieurService.retrieveAllSkieurs();
@@ -45,6 +50,12 @@ public class SkieurRestController {
     public Skieur updateSkieur(@RequestBody Skieur m) {
         Skieur skieur = skieurService.updateSkieur(m);
         return skieur;
+    }
+
+    @PostMapping("/add-piste")
+    Skieur assignSkieurToPiste(@RequestBody Long p,@RequestBody  Long s) {
+     return skieurService.assignSkieurToPiste(s,p);
+
     }
 
 

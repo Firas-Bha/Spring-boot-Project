@@ -19,4 +19,6 @@ public class Inscription  implements Serializable {
     @ManyToOne
     private Cours cours;
 
+    public void setCours(Cours cours) {
+    }
 }
