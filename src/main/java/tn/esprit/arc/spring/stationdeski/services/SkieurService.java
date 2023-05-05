@@ -1,40 +1,41 @@
-package tn.esprit.arc.spring.stationdeski.services;
+package com.example.stationdeski.services;
 
+import com.example.stationdeski.entities.*;
+import com.example.stationdeski.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import tn.esprit.arc.spring.stationdeski.entites.*;
-import tn.esprit.arc.spring.stationdeski.repositories.AbonnementRepository;
-import tn.esprit.arc.spring.stationdeski.repositories.CoursRepository;
-import tn.esprit.arc.spring.stationdeski.repositories.SkieurRepository;
-import tn.esprit.arc.spring.stationdeski.repositories.PisteRepository;
-
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 @Service
 @AllArgsConstructor
 public class SkieurService implements ISkieurService{
+
     SkieurRepository skieurRepository;
     PisteRepository pisteRepository;
+    CoursRepository coursRepository;
     AbonnementRepository abonnementRepository;
-    CoursRepository coursRepository ;
+
 
     @Override
-    public List<Skieur> retrieveAllSkieurs() {return skieurRepository.findAll();}
-
-    @Override
-    public Skieur addSkieur(Skieur e) {
-        return skieurRepository.save(e);
+    public List<Skieur> retrieveAllSkieurs() {
+        return skieurRepository.findAll();
     }
 
     @Override
-    public Skieur updateSkieur(Skieur e
-    ) {
-        skieurRepository.save(e);
-        return  e;
+    public Skieur addSkieur(Skieur s) {
+        skieurRepository.save(s);
+        return s;
+    }
+
+    @Override
+    public Skieur updateSkieur(Skieur s) {
+        skieurRepository.save(s);
+        return s;
     }
 
     @Override
@@ -43,11 +44,9 @@ public class SkieurService implements ISkieurService{
     }
 
     @Override
-    public void deleteSkieur(Integer idMoniteur) {
-        skieurRepository.deleteById(idMoniteur);
-
+    public void deleteSkieur(Integer idSkieur) {
+        skieurRepository.deleteById(idSkieur);
     }
-
     @Transactional
     public Skieur assignSkieurToPiste(Long numSkieur, Long numPiste){
         Skieur sk=skieurRepository.GetSkieurByNum(String.valueOf(numSkieur));
@@ -59,22 +58,22 @@ public class SkieurService implements ISkieurService{
 
     }
     @Transactional
-    public Skieur addSkieurAndAssignToCours(Skieur skieur, Long numCours){
+    public Skieur addSkieurAndAssignToCours(Skieur  , Long numCours){
         Cours cours=coursRepository.getCoursByNum(String.valueOf(numCours));
         Skieur s=skieurRepository.save(skieur);
         Set<Inscription> inscriptions= s.getInscriptions();
         for (Inscription ins:inscriptions
-        ) {
+             ) {
             ins.setCours(cours);
         }
         return s;
     }
 
     @Override
-    public List<Skieur> retrieveSkieursByAbonnementType(TypeAbonnement typeAbonnement) {
-        Set<Abonnement> ab=abonnementRepository.getAbonByType(typeAbonnement);
-        Skieur skieur= new Skieur();
-        List<Skieur> skieurList= new ArrayList<>();
+    public List<Skieur> retrieveSkieursByAbonnementType(typeAbonnement typeAbonnement) {
+       Set<Abonnement> ab=abonnementRepository.getAbonByType(typeAbonnement);
+       Skieur skieur= new Skieur();
+       List<Skieur> skieurList= new ArrayList<>();
         System.out.println("abonnements= "+ab);
 
         for (Abonnement a:ab)
@@ -86,4 +85,17 @@ public class SkieurService implements ISkieurService{
         }
         return skieurList;
     }
+
+    @Transactional
+   public  HashMap<Couleur,Integer> nombreSkieursParCouleurPiste(){
+        HashMap<Couleur, Integer> nombreSkieurs = new HashMap<>();
+        Couleur couleurs[]= Couleur.values();
+        for (Couleur c: couleurs) {
+            nombreSkieurs.put(c,skieurRepository.findCouleur(c).size());
+
+        }
+        return nombreSkieurs;
+    }
 }
+
+

@@ -52,11 +52,11 @@ public class SkieurRestController {
         return skieur;
     }
 
-    @PostMapping("/add-piste")
+   /* @PostMapping("/add-piste")
     Skieur assignSkieurToPiste(@RequestBody Long p,@RequestBody  Long s) {
      return skieurService.assignSkieurToPiste(s,p);
 
-    }
+    }*/
 
 
 }

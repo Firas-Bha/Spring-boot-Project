@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface SkieurRepository extends JpaRepository<Skieur,Integer> {
     public Skieur findByNumSkieur( Long numSkieur);
-    @Query("SELECT s FROM Skieur s WHERE s.numSkieur =:numSkieur")
+ /*   @Query("SELECT s FROM Skieur s WHERE s.numSkieur =:numSkieur")
     Skieur GetSkieurByNum(@Param("numSkieur") String numSkieur);
 
     @Query("SELECT s FROM Skieur s WHERE s.abonnements =:abonnements")
-    Skieur findbyIdAbon(@Param("abonnements") int id);
+    Skieur findbyIdAbon(@Param("abonnements") int id);*/
 
-    List<Skieur> findByAbonnement(Abonnement abonnement);
+  //  List<Skieur> findByAbonnement(Abonnement abonnement);
 }
